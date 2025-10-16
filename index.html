@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Reloj Histórico de Teposcolula</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-image: url('relojfondo.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: rgba(30, 60, 114, 0.85);
+        }
+
+        h1 {
+            color: #d4af37;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #f5f5dc;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .date-badge {
+            background: #d4af37;
+            color: #1e3c72;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            background: #fff;
+        }
+
+        .info-section {
+            margin-bottom: 4rem;
+        }
+
+        .info-section h2 {
+            color: #1e3c72;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            border-bottom: 4px solid #d4af37;
+            padding-bottom: 0.5rem;
+        }
+
+        .info-section p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f5f5dc 0%, #e8dcc0 100%);
+            border-left: 6px solid #d4af37;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card h3 {
+            color: #d4af37;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            text-align: left;
+        }
+
+        .bibliography {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+        }
+
+        .bibliography-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .bibliography-content p {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .bibliography-content p::before {
+            content: '📖';
+            position: absolute;
+            left: 0;
+        }
+
+        .publication-info {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .publication-info h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .publication-info p {
+            margin-bottom: 0.5rem;
+            text-align: left;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .image-container {
+            text-align: center;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: auto;
+            min-height: 250px;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 4px solid #d4af37;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .image-caption {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #1e3c72;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        footer {
+            background: #1e3c72;
+            color: #f5f5dc;
+            text-align: center;
+            padding: 2rem;
+            font-size: 1rem;
+        }
+
+        .bell-icon {
+            font-size: 3rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            animation: swing 2s ease-in-out infinite;
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            75% { transform: rotate(-15deg); }
+        }
+
+        /* Media Queries para Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 1.5rem 1rem;
+            }
+
+            .content {
+                padding: 2rem 1rem;
+            }
+
+            .info-section {
+                margin-bottom: 2rem;
+            }
+
+            .highlight-box {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .feature-grid,
+            .image-gallery {
+                gap: 1.5rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .bibliography {
+                padding: 2rem 1rem;
+            }
+
+            .bibliography-content,
+            .publication-info {
+                padding: 1.5rem;
+            }
+
+            .date-badge {
+                padding: 0.75rem 1.5rem;
+            }
+
+            .bell-icon {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 1rem 0.75rem;
+            }
+
+            .content {
+                padding: 1.5rem 0.75rem;
+            }
+
+            h1 {
+                letter-spacing: 1px;
+            }
+
+            .info-section p {
+                text-align: left;
+            }
+
+            .highlight-box {
+                padding: 1rem;
+                border-left-width: 4px;
+            }
+
+            .feature-card,
+            .bibliography-content,
+            .publication-info {
+                padding: 1rem;
+            }
+
+            .date-badge {
+                padding: 0.5rem 1rem;
+            }
+
+            .gallery-image {
+                border-width: 2px;
+                border-radius: 10px;
+            }
+
+            .bell-icon {
+                font-size: 2rem;
+            }
+
+            footer {
+                padding: 1.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>El Reloj Histórico de Teposcolula</h1>
+        <p class="subtitle">Un símbolo de modernidad en la Mixteca Alta</p>
+        <div class="date-badge">16 de Septiembre de 1902</div>
+        <div class="bell-icon">🔔</div>
+    </div>
+
+    <div class="content">
+        <div class="info-section">
+            <h2>La Inauguración</h2>
+            <p>En plenos festejos del 92° aniversario de la independencia de México, el 16 de septiembre de 1902, se inauguró el reloj público municipal de San Pedro y San Pablo Teposcolula. Este acontecimiento marcó un hito en la transformación urbana de la jefatura política de uno de los distritos más importantes de Oaxaca.</p>
+            
+            <div class="highlight-box">
+                <p><strong>El reloj se instaló en el centro de la parte superior del Palacio Municipal</strong>, declarado monumento histórico desde 1986. Se le adaptó un cuarto de máquinas y un aparato con tres campanas en la parte exterior, protegidas con una sombrilla de estructura de madera cubierta de metal, permitiendo que su sonido se escuchara a mayor distancia.</p>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>📷 Galería del Reloj</h2>
+            <div class="image-gallery">
+                <div class="image-container">
+                    <img src="reloj/reloj_.png" alt="Vista del reloj público municipal en el Palacio de Teposcolula" class="gallery-image">
+                    <p class="image-caption">Vista del reloj público municipal en el Palacio de Teposcolula</p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="reloj/reloj_frances.png" alt="Mecanismo y detalles del reloj francés" class="gallery-image">
+                    <p class="image-caption">Mecanismo y detalles del reloj francés</p>
+                </div>
+
+                 <div class="image-container">
+                    <img src="relojfondo.jpeg" alt="Mecanismo y detalles del reloj francés" class="gallery-image">
+                    <p class="image-caption">Reloj en la actualidad (2025)</p>
+                </div>
+                 <div class="image-container">
+                    <img src="reloj/campana.jpeg" alt="Mecanismo y detalles del reloj francés" class="gallery-image">
+                    <p class="image-caption">Campana</p>
+                </div>
+
+                
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Características Técnicas</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🇫🇷 Origen Francés</h3>
+                    <p>El reloj funciona con un sistema mecánico de hechura francesa, representando la tecnología europea de vanguardia del cambio de siglo.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>💎 La Esmeralda</h3>
+                    <p>Cuenta con placas del fabricante "La Esmeralda México, Hauser Zivy y Cía", una de las joyerías más importantes de México propiedad de judíos Hauser y Zivy.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>⚡ Modernización</h3>
+                    <p>Actualmente se le ha adaptado un sistema eléctrico, manteniendo su funcionalidad después de más de 120 años de servicio.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>🏛️ Resistencia</h3>
+                    <p>Ha resistido fuertes sismos como el de 1928 y el de 1999, permaneciendo en perfectas condiciones como testimonio de su calidad constructiva.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Significado Histórico</h2>
+            <p>La instalación del reloj público en Teposcolula representó mucho más que una simple medición del tiempo. Simbolizó la consolidación del <strong>tiempo laico</strong> en contraposición al tiempo religioso que había regido la vida cotidiana durante siglos.</p>
+            
+            <p>Este reloj llegó a la Mixteca seis siglos después de que los monjes del priorato de Dunstable en Inglaterra usaran por primera vez un reloj mecánico en 1283, y casi cuatro siglos después de que Carlos V obsequiara el primer reloj en la torre de México a Cortés, instalado en el templo franciscano de Cuernavaca en el siglo XVI.</p>
+            
+            <div class="highlight-box">
+                <p><strong>El reloj formó parte de las transformaciones del Porfiriato</strong>, que bajo el lema "poca política y mucha administración" buscaba modernizar México. La ampliación de la partida del presupuesto de egresos para obras materiales en 1900 permitió que Teposcolula se sumara a esta ola de progreso material.</p>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Un Legado Vivo</h2>
+            <p>Al paso de los años, los demás pueblos alrededor de Teposcolula también tendrían sus relojes públicos, consolidando esta nueva forma de organizar la vida cotidiana en la región. El reloj de Teposcolula se mantiene como un testimonio tangible de aquella época de transformación y modernización.</p>
+            
+            <p>Gracias al rescate y organización del Archivo Histórico Municipal por la Fundación Alfredo Harp Helú y ADABI de México, hoy podemos conocer los detalles de esta importante pieza de la historia local que sigue marcando el tiempo en el corazón de la Mixteca Alta.</p>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="info-section bibliography">
+            <h2>📚 Bibliografía</h2>
+            <div class="bibliography-content">
+                <p><strong>Archivo Histórico Municipal de San Pedro y San Pablo Teposcolula (AHMSPSPT)</strong></p>
+                
+                <p>Crespo, Gilberto et al., <em>México su evolución social</em>, México, Miguel Ángel Porrúa, tomo 1, 2005.</p>
+                
+                <p><em>¿Cómo se hizo posible? Historia de las Grandes Realizaciones Humanas</em>, Madrid, Reader's Digest, 1997.</p>
+                
+                <p>Cristóbal Cruz, Eduardo Pinito, <em>Teposcolula, zona de monumentos históricos</em>, Oaxaca, CONACULTA/Secretaría de las Culturas y Artes de Oaxaca, 2012.</p>
+                
+                <p>AHMSPSPT, sección Tesorería, serie Ingresos y egresos, año 1899.</p>
+            </div>
+            
+            <div class="publication-info">
+                <h3>Información de publicación</h3>
+                <p><strong>Archivo Histórico Municipal de San Pedro y San Pablo Teposcolula</strong></p>
+                <p>Se imprimió en julio de 2013 en Cerro de San Andrés 312, Col. Campestre Churubusco, 04200 Coyoacán, México, D.F.</p>
+                <p>El tiro consta de 150 ejemplares.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>El Reloj Histórico de Teposcolula - Patrimonio Cultural de Oaxaca</p>
+        <p>Más de 120 años marcando el tiempo en la Mixteca Alta</p>
+    </footer>
+
+    <script>
+        // Script simplificado sin el reloj animado
+    </script>
+</body>
+</html>
+
